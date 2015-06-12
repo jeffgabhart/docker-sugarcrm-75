@@ -1,43 +1,44 @@
-docker-sugarcrm75
+docker-sugarcrm-75
 ===================
 
 Dockerfile for Apache &amp; PHP 5.4 for SugarCRM.
 
+Docker Compose for SugarCRM, MySql, and ElasticSearch.
 
-### Instructions
+## Instructions
 
-Here's the steps to get yourself up and running.
+### Download Sugar Pro 7.5.2.1
 
-### MySQL
+### Extract to
 
-You'll need your own version of MySQL for this. As I use Debian testing as a host I just installed MySQL on it and have my SugarCRM boxes point to the host using the dockerhost entry in /etc/hosts.
+    /var/www/SugarPro-Full-7.5.2.1
 
-There is nothing at all stopping you from creating another Docker instance running mysql but I figured this was an unnecessary step and getting data persistence working with Docker can be a little annoying.
+### Update file permissions
 
-### Fill in Docker settings
+    chmod -R 777 /var/www/SugarPro-Full-7.5.2.1
 
-Edit run.sh and change the containers ip to whatever your hosts ip is. Don't forget to set the folder to your SugarCRM code folder.
-
-Edit files/vhost.conf if you wish to use a custom url to access Sugar or if you have multiple instances of SugarCRM installed.
-
-Edit files/php.ini and change any settings you might want to customise with PHP here.
-
-### Tell SugarCRM to use the right MySQL database
-
-In config.php I just set the mysql host to dockerhost
-
-### Hosts entry
-
-Then on your host operating system make sure to point the virtualhost url to the box. For me, in my /etc/hosts I have this entry.
+### Add to /etc/hosts
 
     127.0.0.1 sugar.dev
 
-### Debugging
+### Two ways to run the containers.
 
-Because I've used stdout for logs you can see apache errors by running a command like this.
+#### Run with container output shown in terminal
 
-    sudo docker logs -f sugarcrm75
+##### Start
 
+    docker-compose up
+    
+##### Stop
 
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/shano/docker-sugarcrm-75/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+    Ctrl+c
 
+#### Run as a daemon
+
+##### Start
+
+    docker-compose up -d
+
+##### Stop
+
+    docker-compose stop
